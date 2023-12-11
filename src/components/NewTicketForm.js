@@ -5,6 +5,7 @@ import { v4 } from 'uuid';
 import ReusableForm from "./ReusableForm";
 
 function NewTicketForm(props) {
+  
   function handleNewTicketFormSubmission(event) {
     event.preventDefault();
     props.onNewTicketCreation({
