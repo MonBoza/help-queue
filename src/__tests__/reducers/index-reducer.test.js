@@ -4,6 +4,7 @@ import ticketListReducer from '../../reducers/ticket-list-reducer';
 import { legacy_createStore as createStore } from 'redux';
 import * as c from './../../actions/ActionTypes'
 
+
 describe("rootReducer", () => {
   let store = createStore(rootReducer);
   test('Should return default state if no action type is recognized', () => {

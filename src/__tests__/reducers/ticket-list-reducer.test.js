@@ -1,6 +1,7 @@
 import TicketControl from '../../components/TicketControl';
 import ticketListReducer from '../../reducers/ticket-list-reducer';
 import * as c from './../../actions/ActionTypes'
+import { formatDistanceToNow } from 'date-fns';
 
 describe('ticketListReducer', () => {
 
@@ -24,9 +25,12 @@ describe('ticketListReducer', () => {
     names: 'Ryan & Aimen',
     location: '4b',
     issue: 'Redux action is not working correctly.',
+    timeOpen : new Date(),
+    formattedWaitTime: formatDistanceToNow(new Date(), {
+      addSuffix: true
+    }),
     id: 1
   };
-
   test('Should return default state if no action type is recognized', () => {
     expect(ticketListReducer({}, { type: null })).toEqual({});
   });
@@ -61,6 +65,30 @@ describe('ticketListReducer', () => {
         location: '2a',
         issue: 'Reducer has side effects.',
         id: 2 
+      }
+      
+    });
+    
+  });
+  test('should successfully add a ticket to the ticket list that includes date-fns-formatted wait times', () => {
+    const { names, location, issue, timeOpen, formattedWaitTime, id } = ticketData;
+    action = {
+      type: c.ADD_TICKET,
+      names: names,
+      location: location,
+      issue: issue,
+      timeOpen: timeOpen,
+      formattedWaitTime: formattedWaitTime,
+      id: id
+    };
+    expect(ticketListReducer({}, action)).toEqual({
+      [id] : {
+        names: names,
+        location: location,
+        issue: issue,
+        timeOpen: timeOpen,
+        formattedWaitTime: 'less than a minute ago',
+        id: id
       }
     });
   });
